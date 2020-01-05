@@ -25,9 +25,27 @@ pipeline {
             }
         }
 		 stage('Deliver') {
-            steps {
-                sh './jenkins/scripts/deliver.sh'
+			steps {
+                sh 'mvn package'
             }
+            post {
+                always {
+                    dir('target/my-app-1.0-SNAPSHOT.jar'){
+
+            pwd(); //Log current directory
+
+            withAWS(region:'us-east-1',credentials:'AKIA5O3QMUN5G5KXYJSG') {
+
+                 def identity=awsIdentity();//Log AWS credentials
+
+                // Upload files from working directory 'dist' in your project workspace
+                s3Upload(bucket:"aitdemobucket", workingDir:'dist', includePathPattern:'**/*');
+            }
+
+			};
+                }
+            }
+            
         }
     }
 }
