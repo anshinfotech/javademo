@@ -12,7 +12,7 @@ pipeline {
 	
         stage('Build') { 
 			steps {
-			wrap([$class: 'Xvfb', additionalOptions: '', assignedLabels: '', autoDisplayName: true, debug: true, displayNameOffset: 100, installationName: 'XVFB', parallelBuild: true]) {
+			 wrap([$class: 'Xvfb', additionalOptions: '', assignedLabels: '', autoDisplayName: true, debug: true, displayNameOffset: 0, installationName: 'XVFB', parallelBuild: true, screen: '1024x758x24', timeout: 60]) {
                 sh 'mvn -B -DskipTests clean package' 
 				}
             }
