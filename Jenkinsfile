@@ -9,17 +9,15 @@ pipeline {
         skipStagesAfterUnstable()
     }
     stages {
+	wrap([$class: 'Xvfb', additionalOptions: '', assignedLabels: '', autoDisplayName: true, debug: true, displayNameOffset: 100, installationName: 'XVFB', parallelBuild: true]) {
         stage('Build') { 
-			wrap([$class: 'Xvfb']) {
-            steps {
+			steps {
                 sh 'mvn -B -DskipTests clean package' 
             }
-			}
-
+			
         }
 		stage('Test') {
-			wrap([$class: 'Xvfb']) {
-            steps {
+			steps {
                 sh 'mvn test'
             }
             post {
@@ -27,10 +25,8 @@ pipeline {
                     junit 'target/surefire-reports/*.xml'
                 }
             }
-			}
         }
 		 stage('Deliver') {
-			wrap([$class: 'Xvfb']) {
 			steps {
                 sh 'mvn package'
             }
@@ -50,9 +46,10 @@ pipeline {
 
 			//};
                 }
-				}
+				
             }
             
         }
+		}
     }
 }
