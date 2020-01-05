@@ -10,12 +10,27 @@ pipeline {
     }
     stages {
         stage('Build') { 
+			wrap([$class: 'Xvfb']) {
             steps {
                 sh 'mvn -B -DskipTests clean package' 
             }
+			}
+
         }
-		
+		stage('Test') {
+			wrap([$class: 'Xvfb']) {
+            steps {
+                sh 'mvn test'
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
+			}
+        }
 		 stage('Deliver') {
+			wrap([$class: 'Xvfb']) {
 			steps {
                 sh 'mvn package'
             }
@@ -35,6 +50,7 @@ pipeline {
 
 			//};
                 }
+				}
             }
             
         }
