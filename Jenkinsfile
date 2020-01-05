@@ -34,7 +34,7 @@ pipeline {
 
             pwd(); //Log current directory
 
-            withAWS(region:'us-east-1',credentials:'94e6f76d-5e0d-49ae-aa50-b514623ff7f1') {
+            withAWS(region:'us-east-1',credentials:'925264290682') {
 
                  //def identity=awsIdentity();//Log AWS credentials
 
