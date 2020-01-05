@@ -9,27 +9,25 @@ pipeline {
         skipStagesAfterUnstable()
     }
     stages {
-	
         stage('Build') { 
-			steps {
-			
-			    sh 'mvn -B -DskipTests clean package' 
-				}
-            
+		
+            steps {
+                sh 'mvn -B -DskipTests clean package' 
+            }
         }
 		stage('Test') {
-			steps {
-                wrap([$class: 'Xvfb', additionalOptions: '', assignedLabels: '', autoDisplayName: true, debug: true, displayNameOffset: 0, installationName: 'XVFB', parallelBuild: true, screen: '1024x758x24', timeout: 25]) {
-				sh 'mvn test'
-				}
+            steps {
+                sh 'mvn test'
             }
-            
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
+            }
         }
 		 stage('Deliver') {
 			steps {
-                wrap([$class: 'Xvfb', additionalOptions: '', assignedLabels: '', autoDisplayName: true, debug: true, displayNameOffset: 0, installationName: 'XVFB', parallelBuild: true, screen: '1024x758x24', timeout: 25]) {
-				sh 'mvn package'
-				}
+                sh 'mvn package'
             }
             post {
                 always {
@@ -47,10 +45,8 @@ pipeline {
 
 			//};
                 }
-				
             }
             
-        
-		}
+        }
     }
 }
