@@ -9,10 +9,12 @@ pipeline {
         skipStagesAfterUnstable()
     }
     stages {
-	wrap([$class: 'Xvfb', additionalOptions: '', assignedLabels: '', autoDisplayName: true, debug: true, displayNameOffset: 100, installationName: 'XVFB', parallelBuild: true]) {
+	
         stage('Build') { 
 			steps {
+			wrap([$class: 'Xvfb', additionalOptions: '', assignedLabels: '', autoDisplayName: true, debug: true, displayNameOffset: 100, installationName: 'XVFB', parallelBuild: true]) {
                 sh 'mvn -B -DskipTests clean package' 
+				}
             }
 			
         }
@@ -49,7 +51,7 @@ pipeline {
 				
             }
             
-        }
+        
 		}
     }
 }
