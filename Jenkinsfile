@@ -36,7 +36,7 @@ pipeline {
 
             withAWS(region:'us-east-1',credentials:'AKIA5O3QMUN5G5KXYJSG') {
 
-                 def identity=awsIdentity();//Log AWS credentials
+                 //def identity=awsIdentity();//Log AWS credentials
 
                 // Upload files from working directory 'dist' in your project workspace
                 s3Upload(bucket:"aitdemobucket", workingDir:'dist', includePathPattern:'**/*');
