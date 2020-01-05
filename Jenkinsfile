@@ -12,13 +12,16 @@ pipeline {
 	
         stage('Build') { 
 			steps {
+			
 			    sh 'mvn -B -DskipTests clean package' 
 				}
             
         }
 		stage('Test') {
 			steps {
-                sh 'mvn test'
+                wrap([$class: 'Xvfb']) {
+				sh 'mvn test'
+				}
             }
             post {
                 always {
@@ -28,7 +31,9 @@ pipeline {
         }
 		 stage('Deliver') {
 			steps {
-                sh 'mvn package'
+                wrap([$class: 'Xvfb']) {
+				sh 'mvn package'
+				}
             }
             post {
                 always {
