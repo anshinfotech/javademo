@@ -30,7 +30,7 @@ pipeline {
             }
             post {
                 always {
-                    dir('target/my-app-1.0-SNAPSHOT.jar'){
+                    //dir('target/my-app-1.0-SNAPSHOT.jar'){
 
             pwd(); //Log current directory
 
@@ -39,10 +39,10 @@ pipeline {
                  //def identity=awsIdentity();//Log AWS credentials
 
                 // Upload files from working directory 'dist' in your project workspace
-                s3Upload(bucket:"aitdemobucket", workingDir:'dist', includePathPattern:'**/*');
+                s3Upload(bucket:"aitdemobucket", workingDir:'target/', includePathPattern:'*.jar');
             }
 
-			};
+			//};
                 }
             }
             
