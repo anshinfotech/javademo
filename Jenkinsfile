@@ -1,3 +1,4 @@
+echo $PATH
 pipeline {
     
 	agent{
