@@ -14,12 +14,12 @@ pipeline {
         stage('Build') { 
 		
             steps {
-                sh 'mvn -B -DskipTests clean package' 
+                shell 'mvn -B -DskipTests clean package' 
             }
         }
 		stage('Test') {
             steps {
-                sh 'mvn test'
+                shell 'mvn test'
             }
             post {
                 always {
@@ -29,7 +29,7 @@ pipeline {
         }
 		 stage('Deliver') {
 			steps {
-                sh 'mvn package'
+                shell 'mvn package'
             }
             post {
                 always {
